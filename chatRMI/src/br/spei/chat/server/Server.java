@@ -15,7 +15,7 @@ public class Server {
     public Server() {
 	try {
 	    ChatService cs = new ChatServiceImpl();
-	    Registry registry = LocateRegistry.getRegistry(1066);
+	    Registry registry = LocateRegistry.createRegistry(1066);
 	    registry.rebind("ChatService", cs);
 
 	    System.out.println("Servidor iniciado!");
