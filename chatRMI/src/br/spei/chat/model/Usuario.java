@@ -1,8 +1,10 @@
 package br.spei.chat.model;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Usuario {
+public class Usuario implements Serializable {
+    private static final long serialVersionUID = -5267311869379628456L;
 
     private UUID uuid;
     private String nickname;

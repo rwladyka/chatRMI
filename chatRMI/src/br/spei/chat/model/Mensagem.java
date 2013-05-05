@@ -1,6 +1,9 @@
 package br.spei.chat.model;
 
-public class Mensagem {
+import java.io.Serializable;
+
+public class Mensagem implements Serializable {
+    private static final long serialVersionUID = -774961992381395913L;
 
     private Usuario usuario;
     private String mensagem;

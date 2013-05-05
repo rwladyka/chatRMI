@@ -1,6 +1,8 @@
 package br.spei.chat.model;
 
-public enum TipoMensagem {
+import java.io.Serializable;
+
+public enum TipoMensagem implements Serializable {
 
     PUBLICA("PUBLICA", "%s falou para todos: "), PRIVADA("PRIVADA",
 	    "%s falou reservadamente com %s");

@@ -1,5 +1,6 @@
 package br.spei.chat.server.model;
 
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,17 +10,18 @@ import java.util.Set;
 import br.spei.chat.model.Usuario;
 import br.spei.chat.rmi.service.ChatService.NicknameException;
 
-public class ServerModel {
+public class ServerModel implements Serializable {
+    private static final long serialVersionUID = 3368529267336022665L;
 
     private static ServerModel server;
     private Set<Usuario> usuarios;
-    private Map<Usuario, Socket> conectedUsers;
+    private Map<Usuario, Socket> socketUsuarios;
 
     public static ServerModel INSTANCE = getInstance();
 
     private ServerModel() {
 	usuarios = new HashSet<Usuario>();
-	conectedUsers = new HashMap<Usuario, Socket>();
+	socketUsuarios = new HashMap<Usuario, Socket>();
     }
 
     private static ServerModel getInstance() {
@@ -45,13 +47,13 @@ public class ServerModel {
     }
 
     public Map<Usuario, Socket> getSocketUsuarios() {
-	return conectedUsers;
+	return socketUsuarios;
     }
 
     public Socket getSocketUsuario(String nickname) {
 	for (Usuario usuario : usuarios) {
 	    if (usuario.equals(nickname)) {
-		return conectedUsers.get(usuario);
+		return socketUsuarios.get(usuario);
 	    }
 	}
 	return null;

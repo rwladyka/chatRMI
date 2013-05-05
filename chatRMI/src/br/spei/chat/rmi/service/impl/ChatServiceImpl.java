@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +14,13 @@ import br.spei.chat.model.Usuario;
 import br.spei.chat.rmi.service.ChatService;
 import br.spei.chat.server.model.ServerModel;
 
-public class ChatServiceImpl implements ChatService {
+public class ChatServiceImpl extends UnicastRemoteObject implements ChatService {
+    private static final long serialVersionUID = 7154266572305424129L;
     private static ServerModel server = ServerModel.INSTANCE;
+
+    public ChatServiceImpl() throws RemoteException {
+	super();
+    }
 
     @Override
     public List<String> listarUsuarios() throws RemoteException {
@@ -46,6 +52,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void enviarMensagemPrivada(Mensagem mensagem, String destinatario)
 	    throws RemoteException {
+
 	Socket socket = server.getSocketUsuario(destinatario);
 	if (socket != null) {
 	    try {
@@ -59,6 +66,7 @@ public class ChatServiceImpl implements ChatService {
 		desconectar(mensagem.getUsuario());
 	    }
 	}
+
     }
 
     @Override

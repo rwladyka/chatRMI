@@ -26,13 +26,14 @@ public class MainFrame extends JFrame {
     }
 
     private MainFrame() {
-	super("SPEIPARK3000");
+	super("CHAT SPEI");
 	init();
     }
 
     public static void main(String args[]) {
 	Configuracao.getInstance().desserializar();
 	getInstance();
+	ConectarFrame.getInstance();
     }
 
     private void init() {
@@ -41,7 +42,7 @@ public class MainFrame extends JFrame {
 	painelDeskTop.add(desk);
 	this.add(painelDeskTop);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	setSize(500, 400);
+	setSize(800, 600);
 	setVisible(true);
     }
 
