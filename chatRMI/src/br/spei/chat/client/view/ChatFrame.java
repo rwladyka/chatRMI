@@ -2,6 +2,7 @@ package br.spei.chat.client.view;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -20,6 +21,7 @@ public class ChatFrame extends JInternalFrame {
     private JButton buttonSend;
     private JScrollPane panelUsuarios;
     private JScrollPane panelConversa;
+    private JCheckBox reservada;
 
     private JList listaUsuarios;
     private DefaultListModel listClient;
@@ -41,13 +43,14 @@ public class ChatFrame extends JInternalFrame {
 	setLabelConversa();
 	setLabelMensagem();
 	setLabelUsuarios();
+	setTextareaConversa();
+	setTextareaMensagem();
+	setListClient();
+	setListaUsuarios();
 	setButtonEnviar();
 	setPanelConversa();
 	setPanelUsuarios();
-	setListClient();
-	setListaUsuarios();
-	setTextareaConversa();
-	setTextareaMensagem();
+	setCheckReservada();
     }
 
     private void setLabelUsuarios() {
@@ -111,4 +114,9 @@ public class ChatFrame extends JInternalFrame {
 	getContentPane().add(this.jTextSendMessage);
     }
 
+    private void setCheckReservada() {
+	this.reservada = new JCheckBox("Reservada");
+	this.reservada.setBounds(100, 420, 200, 17);
+	getContentPane().add(this.reservada);
+    }
 }
