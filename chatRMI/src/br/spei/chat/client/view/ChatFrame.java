@@ -1,7 +1,5 @@
 package br.spei.chat.client.view;
 
-import java.net.Socket;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JInternalFrame;
@@ -15,18 +13,19 @@ import javax.swing.WindowConstants;
 public class ChatFrame extends JInternalFrame {
     private static final long serialVersionUID = -8434242822734503062L;
 
-    private JButton jButtonSend;
-    private JLabel jLabelUserList;
-    private JList jListUser;
-    private JScrollPane jScrollPaneListUser;
-    private JScrollPane jScrollPaneMessage;
-    private JTextArea jTextAreaMessage;
-    private JTextField jTextSendMessage;
+    private JLabel labelConversa;
+    private JLabel labelMensagem;
+    private JLabel labelUsarios;
 
-    private Socket socket = null;
+    private JButton buttonSend;
+    private JScrollPane panelUsuarios;
+    private JScrollPane panelConversa;
+
+    private JList listaUsuarios;
     private DefaultListModel listClient;
 
-    private String message;
+    private JTextArea textareaConversa;
+    private JTextField jTextSendMessage;
 
     public ChatFrame(String nickname) {
 	initComponents(nickname);
@@ -39,45 +38,77 @@ public class ChatFrame extends JInternalFrame {
 	setResizable(false);
 	getContentPane().setLayout(null);
 	setSize(796, 547);
-
-	this.listClient = new DefaultListModel();
-	this.jScrollPaneMessage = new JScrollPane();
-	this.jTextAreaMessage = new JTextArea();
-	this.jScrollPaneListUser = new JScrollPane();
-	this.jListUser = new JList(listClient);
-	this.jTextSendMessage = new JTextField();
-	this.jButtonSend = new JButton();
-	this.jLabelUserList = new JLabel();
-
-	this.jTextAreaMessage.setColumns(50);
-	this.jTextAreaMessage.setEditable(false);
-	this.jTextAreaMessage.setRows(5);
-	this.jTextAreaMessage.setAutoscrolls(false);
-	this.jScrollPaneMessage.setViewportView(this.jTextAreaMessage);
-
-	getContentPane().add(this.jScrollPaneMessage);
-	this.jScrollPaneMessage.setBounds(10, 10, 570, 240);
-
-	this.jScrollPaneListUser.setViewportView(this.jListUser);
-
-	getContentPane().add(this.jScrollPaneListUser);
-	this.jScrollPaneListUser.setBounds(590, 50, 190, 200);
-
-	// this.jTextSendMessage.addActionListener(this);
-
-	getContentPane().add(this.jTextSendMessage);
-	this.jTextSendMessage.setBounds(10, 260, 570, 30);
-
-	this.jButtonSend.setText("Enviar");
-	// this.jButtonSend.addActionListener(this);
-
-	getContentPane().add(this.jButtonSend);
-	this.jButtonSend.setBounds(580, 260, 180, 30);
-
-	this.jLabelUserList.setText("Usuários");
-	getContentPane().add(this.jLabelUserList);
-	this.jLabelUserList.setBounds(590, 5, 200, 17);
-
-	this.jButtonSend.setEnabled(false);
+	setLabelConversa();
+	setLabelMensagem();
+	setLabelUsuarios();
+	setButtonEnviar();
+	setPanelConversa();
+	setPanelUsuarios();
+	setListClient();
+	setListaUsuarios();
+	setTextareaConversa();
+	setTextareaMensagem();
     }
+
+    private void setLabelUsuarios() {
+	this.labelUsarios = new JLabel("Usuários");
+	this.labelUsarios.setBounds(590, 5, 200, 17);
+	getContentPane().add(this.labelUsarios);
+    }
+
+    private void setLabelMensagem() {
+	this.labelMensagem = new JLabel("Mensagem");
+	this.labelMensagem.setBounds(10, 420, 200, 17);
+	getContentPane().add(this.labelMensagem);
+    }
+
+    private void setLabelConversa() {
+	this.labelConversa = new JLabel("Conversa");
+	this.labelConversa.setBounds(10, 5, 200, 17);
+	getContentPane().add(this.labelConversa);
+    }
+
+    private void setButtonEnviar() {
+	this.buttonSend = new JButton("Enviar");
+	this.buttonSend.setBounds(590, 440, 190, 70);
+	// this.buttonSend.addActionListener(this);
+	getContentPane().add(this.buttonSend);
+    }
+
+    private void setPanelConversa() {
+	this.panelConversa = new JScrollPane();
+	this.panelConversa.setViewportView(this.textareaConversa);
+	getContentPane().add(this.panelConversa);
+	this.panelConversa.setBounds(10, 30, 570, 380);
+    }
+
+    private void setPanelUsuarios() {
+	this.panelUsuarios = new JScrollPane();
+	this.panelUsuarios.setViewportView(this.listaUsuarios);
+	this.panelUsuarios.setBounds(590, 30, 190, 380);
+	getContentPane().add(this.panelUsuarios);
+    }
+
+    private void setListClient() {
+	this.listClient = new DefaultListModel();
+    }
+
+    private void setListaUsuarios() {
+	this.listaUsuarios = new JList(this.listClient);
+    }
+
+    private void setTextareaConversa() {
+	this.textareaConversa = new JTextArea();
+	this.textareaConversa.setColumns(50);
+	this.textareaConversa.setEditable(false);
+	this.textareaConversa.setRows(5);
+	this.textareaConversa.setAutoscrolls(false);
+    }
+
+    private void setTextareaMensagem() {
+	this.jTextSendMessage = new JTextField();
+	this.jTextSendMessage.setBounds(10, 440, 570, 70);
+	getContentPane().add(this.jTextSendMessage);
+    }
+
 }
