@@ -4,28 +4,39 @@ import java.io.Serializable;
 
 public enum TipoMensagem implements Serializable {
 
-    PUBLICA("PUBLICA", "%s falou para todos: "), PRIVADA("PRIVADA",
-	    "%s falou reservadamente com %s");
+    PUBLICA(1, "[%s] %s falou para %s: ", false), //
+    RESERVADA(2, "[%s] %s falou reservadamente com %s", true), //
+    SAIDA(3, "[%s] %s saiu da conversa", false), //
+    CONECTADO(4, "[%s] %s entrou na conversa", false);
 
-    private String tipoMensagem;
+    private int id;
     private String formatoDescricao;
+    private boolean reservada;
 
-    private TipoMensagem(String tipoMensagem, String formatoDescricao) {
-	this.tipoMensagem = tipoMensagem;
+    private TipoMensagem(int id, String formatoDescricao, boolean reservada) {
 	this.formatoDescricao = formatoDescricao;
+	this.reservada = reservada;
     }
 
-    public String getTipoMensagem() {
-	return tipoMensagem;
+    public int getId() {
+	return id;
+    }
+
+    public void setId(int id) {
+	this.id = id;
     }
 
     public String getFormatoDescricao() {
 	return formatoDescricao;
     }
 
+    public boolean isReservada() {
+	return reservada;
+    }
+
     @Override
     public String toString() {
-	return tipoMensagem;
+	return name();
     }
 
 }

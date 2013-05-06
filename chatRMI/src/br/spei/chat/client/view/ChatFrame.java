@@ -7,29 +7,31 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+
+import br.spei.chat.client.action.EnviarMensagemAction;
+import br.spei.chat.client.model.Conversa;
 
 public class ChatFrame extends JInternalFrame {
     private static final long serialVersionUID = -8434242822734503062L;
 
-    private JLabel labelConversa;
     private JLabel labelMensagem;
     private JLabel labelUsarios;
 
     private JButton buttonSend;
     private JScrollPane panelUsuarios;
-    private JScrollPane panelConversa;
     private JCheckBox reservada;
 
     private JList listaUsuarios;
     private DefaultListModel listClient;
 
-    private JTextArea textareaConversa;
+    private Conversa conversa;
+
     private JTextField jTextSendMessage;
 
     public ChatFrame(String nickname) {
+	conversa = Conversa.getInstance();
 	initComponents(nickname);
 	setVisible(true);
     }
@@ -40,17 +42,16 @@ public class ChatFrame extends JInternalFrame {
 	setResizable(false);
 	getContentPane().setLayout(null);
 	setSize(796, 547);
-	setLabelConversa();
 	setLabelMensagem();
 	setLabelUsuarios();
-	setTextareaConversa();
 	setTextareaMensagem();
 	setListClient();
 	setListaUsuarios();
 	setButtonEnviar();
-	setPanelConversa();
 	setPanelUsuarios();
 	setCheckReservada();
+	getContentPane().add(conversa.getLabelConversa());
+	getContentPane().add(conversa.getPanelConversa());
     }
 
     private void setLabelUsuarios() {
@@ -65,24 +66,11 @@ public class ChatFrame extends JInternalFrame {
 	getContentPane().add(this.labelMensagem);
     }
 
-    private void setLabelConversa() {
-	this.labelConversa = new JLabel("Conversa");
-	this.labelConversa.setBounds(10, 5, 200, 17);
-	getContentPane().add(this.labelConversa);
-    }
-
     private void setButtonEnviar() {
 	this.buttonSend = new JButton("Enviar");
 	this.buttonSend.setBounds(590, 440, 190, 70);
-	// this.buttonSend.addActionListener(this);
+	this.buttonSend.addActionListener(new EnviarMensagemAction(this));
 	getContentPane().add(this.buttonSend);
-    }
-
-    private void setPanelConversa() {
-	this.panelConversa = new JScrollPane();
-	this.panelConversa.setViewportView(this.textareaConversa);
-	getContentPane().add(this.panelConversa);
-	this.panelConversa.setBounds(10, 30, 570, 380);
     }
 
     private void setPanelUsuarios() {
@@ -100,14 +88,6 @@ public class ChatFrame extends JInternalFrame {
 	this.listaUsuarios = new JList(this.listClient);
     }
 
-    private void setTextareaConversa() {
-	this.textareaConversa = new JTextArea();
-	this.textareaConversa.setColumns(50);
-	this.textareaConversa.setEditable(false);
-	this.textareaConversa.setRows(5);
-	this.textareaConversa.setAutoscrolls(false);
-    }
-
     private void setTextareaMensagem() {
 	this.jTextSendMessage = new JTextField();
 	this.jTextSendMessage.setBounds(10, 440, 570, 70);
@@ -118,5 +98,21 @@ public class ChatFrame extends JInternalFrame {
 	this.reservada = new JCheckBox("Reservada");
 	this.reservada.setBounds(100, 420, 200, 17);
 	getContentPane().add(this.reservada);
+    }
+
+    public String getMensagem() {
+	return "";
+    }
+
+    public boolean isReservada() {
+	return false;
+    }
+
+    public String getDestinatario() {
+	return "";
+    }
+
+    public void limparMensagemEnviada() {
+	jTextSendMessage.setText("");
     }
 }

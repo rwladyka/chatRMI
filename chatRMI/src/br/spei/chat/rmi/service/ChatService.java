@@ -15,10 +15,7 @@ public interface ChatService extends Remote {
 	}
     }
 
-    public void enviarMensagemPublica(Mensagem mensagem) throws RemoteException;
-
-    public void enviarMensagemPrivada(Mensagem mensagem, String destinatario)
-	    throws RemoteException;
+    public void enviarMensagem(Mensagem mensagem) throws RemoteException;
 
     public Usuario conectar(String nickname) throws RemoteException,
 	    NicknameException;

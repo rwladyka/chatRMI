@@ -1,20 +1,23 @@
 package br.spei.chat.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Mensagem implements Serializable {
     private static final long serialVersionUID = -774961992381395913L;
 
+    private Date data;
     private Usuario usuario;
+    private String destinatario;
     private String mensagem;
     private TipoMensagem tipoMensagem;
 
     public Mensagem() {
+	this.data = new Date();
     }
 
-    public Mensagem(String mensagem) {
-	this.mensagem = mensagem;
-	this.usuario = new Usuario("Sistema");
+    public Date getData() {
+	return data;
     }
 
     public Usuario getUsuario() {
@@ -23,6 +26,14 @@ public class Mensagem implements Serializable {
 
     public void setUsuario(Usuario usuario) {
 	this.usuario = usuario;
+    }
+
+    public String getDestinatario() {
+	return destinatario;
+    }
+
+    public void setDestinatario(String destinatario) {
+	this.destinatario = destinatario;
     }
 
     public String getMensagem() {

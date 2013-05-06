@@ -23,7 +23,7 @@ public class ConectarFrame extends JInternalFrame {
     private JPanel panel = new JPanel();
     private JButton connect;
     private JLabel nickname;
-    private JTextField nick = new JTextField(25);
+    private JTextField nick;
 
     private ConectarFrame() {
 	initComponents();
@@ -45,15 +45,15 @@ public class ConectarFrame extends JInternalFrame {
     }
 
     public void addActionConectar() {
-	this.connect.addActionListener(new ConectarAction(nick.getText()));
+	this.connect.addActionListener(new ConectarAction());
     }
 
-    public JLabel getNickname() {
-	return nickname;
-    }
-
-    public void setNickname(JLabel nickname) {
+    private void setNickname(JLabel nickname) {
 	this.nickname = nickname;
+    }
+
+    public String getNick() {
+	return nick.getText();
     }
 
 }
