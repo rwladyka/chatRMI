@@ -1,5 +1,7 @@
 package br.spei.chat.client.view;
 
+import java.util.List;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,16 +25,17 @@ public class ChatFrame extends JInternalFrame {
     private JScrollPane panelUsuarios;
     private JCheckBox reservada;
 
-    private JList listaUsuarios;
-    private DefaultListModel listClient;
+    private JList<String> listaUsuarios;
+    private DefaultListModel<String> listClient;
 
     private Conversa conversa;
 
     private JTextField jTextSendMessage;
 
-    public ChatFrame(String nickname) {
+    public ChatFrame(String nickname, List<String> usuarios) {
 	conversa = Conversa.getInstance();
 	initComponents(nickname);
+	setListaUsuarios(usuarios);
 	setVisible(true);
     }
 
@@ -69,7 +72,7 @@ public class ChatFrame extends JInternalFrame {
     private void setButtonEnviar() {
 	this.buttonSend = new JButton("Enviar");
 	this.buttonSend.setBounds(590, 440, 190, 70);
-	this.buttonSend.addActionListener(new EnviarMensagemAction(this));
+	this.buttonSend.addMouseListener(new EnviarMensagemAction(this));
 	getContentPane().add(this.buttonSend);
     }
 
@@ -81,11 +84,11 @@ public class ChatFrame extends JInternalFrame {
     }
 
     private void setListClient() {
-	this.listClient = new DefaultListModel();
+	this.listClient = new DefaultListModel<String>();
     }
 
     private void setListaUsuarios() {
-	this.listaUsuarios = new JList(this.listClient);
+	this.listaUsuarios = new JList<String>(this.listClient);
     }
 
     private void setTextareaMensagem() {
@@ -100,16 +103,33 @@ public class ChatFrame extends JInternalFrame {
 	getContentPane().add(this.reservada);
     }
 
+    public void setListaUsuarios(List<String> usuarios) {
+	for (String usuario : usuarios) {
+	    this.listClient.addElement(usuario);
+	}
+	this.listaUsuarios = new JList<String>(listClient);
+    }
+
     public String getMensagem() {
-	return "";
+	String mensagem = "";
+	if (this.jTextSendMessage != null) {
+	    mensagem = this.jTextSendMessage.getText();
+	}
+	return mensagem;
     }
 
     public boolean isReservada() {
+	if (reservada != null) {
+	    return reservada.isSelected();
+	}
 	return false;
     }
 
     public String getDestinatario() {
-	return "";
+	if (listaUsuarios != null) {
+	    return listaUsuarios.getSelectedValue();
+	}
+	return "Todos";
     }
 
     public void limparMensagemEnviada() {

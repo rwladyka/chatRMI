@@ -37,8 +37,8 @@ public class ServerModel implements Serializable {
 	return server;
     }
 
-    public void adicionarSocketUsuario(Usuario usuario, Socket socket) {
-	socketUsuarios.put(usuario, socket);
+    public void adicionarSocketUsuario(Socket socket) {
+	socketUsuarios.put(this.lastConection, socket);
     }
 
     public void adicionarUsuario(Usuario usuario) throws NicknameException {

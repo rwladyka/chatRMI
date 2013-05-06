@@ -28,11 +28,9 @@ public class Server {
 	    System.out.println("Servidor iniciado!");
 
 	    serverSocket = new ServerSocket(PORT_SOCKET);
-
+	    server = ServerModel.INSTANCE;
 	    while (true) {
-		server = ServerModel.INSTANCE;
-		server.adicionarSocketUsuario(server.getLastConection(),
-			serverSocket.accept());
+		server.adicionarSocketUsuario(serverSocket.accept());
 	    }
 
 	} catch (Exception e) {

@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 public enum TipoMensagem implements Serializable {
 
-    PUBLICA(1, "[%s] %s falou para %s: ", false), //
-    RESERVADA(2, "[%s] %s falou reservadamente com %s", true), //
-    SAIDA(3, "[%s] %s saiu da conversa", false), //
-    CONECTADO(4, "[%s] %s entrou na conversa", false);
+    PUBLICA(1, "\n[%s] %s falou para %s: %s", false), //
+    RESERVADA(2, "\n[%s] %s falou reservadamente com %s: %s", true), //
+    SAIDA(3, "\n[%s] %s saiu da conversa", false), //
+    CONECTADO(4, "\n[%s] %s entrou na conversa", false);
 
     private int id;
     private String formatoDescricao;

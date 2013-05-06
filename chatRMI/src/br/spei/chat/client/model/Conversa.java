@@ -37,7 +37,7 @@ public class Conversa {
 
     private void setTextareaConversa() {
 	this.textareaConversa = new JTextArea();
-	this.textareaConversa.setColumns(50);
+	this.textareaConversa.setColumns(20);
 	this.textareaConversa.setEditable(false);
 	this.textareaConversa.setRows(5);
 	this.textareaConversa.setAutoscrolls(false);

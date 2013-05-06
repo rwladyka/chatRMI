@@ -27,6 +27,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
     @Override
     public List<String> listarUsuarios() throws RemoteException {
 	List<String> users = new ArrayList<String>();
+	users.add("Todos");
 	for (Usuario usuario : server.getUsuarios()) {
 	    users.add(usuario.getNickname());
 	}
@@ -73,7 +74,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
 		if (socket != null) {
 		    PrintWriter output = new PrintWriter(
 			    socket.getOutputStream(), true);
-		    output.println(mensagem.getMensagem());
+		    output.println(MensagemUtil.formatarMensagem(mensagem));
 		    output.flush();
 		}
 	    } catch (IOException e) {
@@ -86,6 +87,9 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
 	    throws RemoteException {
 	try {
 	    Socket socket = server.getSocketUsuario(mensagem.getDestinatario());
+	    if (socket == null) {
+		enviarMensagemPublica(mensagem);
+	    }
 	    PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
 	    output.println(mensagem.getMensagem());
 	    output.flush();
