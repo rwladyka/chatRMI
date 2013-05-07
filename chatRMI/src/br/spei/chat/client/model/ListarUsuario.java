@@ -41,6 +41,7 @@ public class ListarUsuario {
 
     private void setListaUsuarios() {
 	this.listaUsuarios = new JList<String>(this.listClient);
+	listaUsuarios.getSelectedIndex();
     }
 
     private void setPanelUsuarios() {
@@ -64,12 +65,17 @@ public class ListarUsuario {
 	this.listaUsuarios = new JList<String>(listClient);
     }
 
+    public JList<String> getListaUsuarios() {
+	return listaUsuarios;
+    }
+
     public String getDestinatario() {
-	if (listaUsuarios != null) {
-	    String selected = listaUsuarios.getModel().getElementAt(
-		    listaUsuarios.getSelectedIndices()[0]);
-	    return selected;
-	}
+	// destinatario = listaUsuarios.getModel().getElementAt(
+	// listaUsuarios.getSelectedIndex());
+	// if (destinatario == null || destinatario.isEmpty()) {
 	return "Todos";
+	// } else {
+	// return destinatario;
+	// }
     }
 }

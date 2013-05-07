@@ -91,6 +91,10 @@ public class ChatFrame extends JInternalFrame {
 	return false;
     }
 
+    public ListarUsuario getListausuarios() {
+	return listaUsuarios;
+    }
+
     public void limparMensagemEnviada() {
 	jTextSendMessage.setText("");
     }

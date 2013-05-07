@@ -10,10 +10,12 @@ public class Recebedor implements Runnable {
 	this.is = is;
     }
 
+    @SuppressWarnings("resource")
     public void run() {
 	Scanner s = new Scanner(this.is);
 	while (s.hasNextLine()) {
 	    Conversa.getInstance().atualizarConversa(s.nextLine());
+	    Conversa.getInstance().atualizarConversa("\n");
 	}
     }
 

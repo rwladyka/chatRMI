@@ -15,23 +15,22 @@ import br.spei.chat.rmi.service.ChatService;
 public class EnviarMensagemAction implements MouseListener {
 
     private Mensagem mensagem;
-    private ChatFrame chatFrame;
+    private static ChatFrame chatFrame;
 
     public EnviarMensagemAction(ChatFrame chatFrame) {
-	this.chatFrame = chatFrame;
-	setMensagem(chatFrame);
+	EnviarMensagemAction.chatFrame = chatFrame;
     }
 
     private Mensagem getMensagem() {
 	return mensagem;
     }
 
-    private void setMensagem(ChatFrame chat) {
+    private void setMensagem() {
 	Mensagem mensagem = new Mensagem();
-	mensagem.setDestinatario("");
-	mensagem.setMensagem(chat.getMensagem());
+	mensagem.setDestinatario(chatFrame.getListausuarios().getDestinatario());
+	mensagem.setMensagem(chatFrame.getMensagem());
 	mensagem.setUsuario(Who.IAM);
-	if (chat.isReservada()) {
+	if (chatFrame.isReservada()) {
 	    mensagem.setTipoMensagem(TipoMensagem.RESERVADA);
 	} else {
 	    mensagem.setTipoMensagem(TipoMensagem.PUBLICA);
@@ -42,7 +41,7 @@ public class EnviarMensagemAction implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 	try {
-	    setMensagem(chatFrame);
+	    setMensagem();
 	    ChatService chat = ServiceUtil.chatService();
 	    chat.enviarMensagem(getMensagem());
 	    chatFrame.limparMensagemEnviada();
