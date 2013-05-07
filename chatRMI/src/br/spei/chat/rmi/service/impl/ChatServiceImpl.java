@@ -36,7 +36,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
 
     @Override
     public void enviarMensagem(Mensagem mensagem) throws RemoteException {
-	if (mensagem.getTipoMensagem() == TipoMensagem.RESERVADA) {
+	if (mensagem.isReservada()) {
 	    enviarMensagemReservada(mensagem);
 	} else {
 	    enviarMensagemPublica(mensagem);

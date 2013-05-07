@@ -56,4 +56,8 @@ public class Mensagem implements Serializable {
     public String toString() {
 	return mensagem;
     }
+
+    public boolean isReservada() {
+	return tipoMensagem.isReservada();
+    }
 }
