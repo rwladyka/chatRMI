@@ -53,6 +53,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
 	mensagem.setUsuario(usuario);
 	mensagem.setMensagem(MensagemUtil.formatarMensagemConexao(mensagem));
 	enviarMensagem(mensagem);
+	enviarSolicitarListaUsuario();
 	return usuario;
     }
 
@@ -64,6 +65,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
 	mensagem.setUsuario(usuario);
 	mensagem.setMensagem(MensagemUtil.formatarMensagem(mensagem));
 	enviarMensagem(mensagem);
+	enviarSolicitarListaUsuario();
     }
 
     private void enviarMensagemPublica(Mensagem mensagem)
@@ -86,16 +88,39 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
     private void enviarMensagemReservada(Mensagem mensagem)
 	    throws RemoteException {
 	try {
-	    Socket socket = server.getSocketUsuario(mensagem.getDestinatario());
-	    if (socket == null) {
+	    Socket envio = server.getSocket(mensagem.getUsuario());
+	    Socket destinatario = server.getSocketUsuario(mensagem
+		    .getDestinatario());
+	    if (destinatario == null) {
 		enviarMensagemPublica(mensagem);
 	    }
-	    PrintWriter output = new PrintWriter(socket.getOutputStream(), true);
-	    output.println(mensagem.getMensagem());
+	    PrintWriter outputEnvio = new PrintWriter(envio.getOutputStream(),
+		    true);
+	    outputEnvio.println(MensagemUtil.formatarMensagem(mensagem));
+	    outputEnvio.flush();
+	    PrintWriter output = new PrintWriter(
+		    destinatario.getOutputStream(), true);
+	    output.println(MensagemUtil.formatarMensagem(mensagem));
 	    output.flush();
 	} catch (IOException e) {
 	    desconectar(server.getUsuario(mensagem.getDestinatario()));
 	    e.printStackTrace();
+	}
+    }
+
+    private void enviarSolicitarListaUsuario() throws RemoteException {
+	for (Usuario usuario : server.getUsuarios()) {
+	    try {
+		Socket socket = server.getSocketUsuarios().get(usuario);
+		if (socket != null) {
+		    PrintWriter output = new PrintWriter(
+			    socket.getOutputStream(), true);
+		    output.println(SOLICITAR_LISTA_USUARIOS);
+		    output.flush();
+		}
+	    } catch (IOException e) {
+		desconectar(usuario);
+	    }
 	}
     }
 

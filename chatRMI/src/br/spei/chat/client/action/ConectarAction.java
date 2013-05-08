@@ -28,10 +28,10 @@ public class ConectarAction implements ActionListener {
 		    .getNick());
 	    ConectarFrame.getInstance().setVisible(false);
 	    Who.setIam(usuario);
-	    MainFrame.getInstance()
-		    .addJanelaInterna(
-			    new ChatFrame(usuario.getNickname(), chat
-				    .listarUsuarios()));
+	    ChatFrame chatFrame = new ChatFrame(usuario.getNickname(),
+		    chat.listarUsuarios());
+	    MainFrame.getInstance().setChatFrame(chatFrame);
+	    MainFrame.getInstance().addJanelaInterna(chatFrame);
 	    new Socks();
 	} catch (NicknameException ne) {
 	    JOptionPane.showMessageDialog(null,

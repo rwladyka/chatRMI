@@ -91,7 +91,7 @@ public class ChatFrame extends JInternalFrame {
 	return false;
     }
 
-    public ListarUsuario getListausuarios() {
+    public ListarUsuario getListaUsuarios() {
 	return listaUsuarios;
     }
 

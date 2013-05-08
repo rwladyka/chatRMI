@@ -15,6 +15,8 @@ public interface ChatService extends Remote {
 	}
     }
 
+    public static final String SOLICITAR_LISTA_USUARIOS = "***SOLICITAR LISTA***";
+
     public void enviarMensagem(Mensagem mensagem) throws RemoteException;
 
     public Usuario conectar(String nickname) throws RemoteException,

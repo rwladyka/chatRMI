@@ -27,7 +27,7 @@ public class EnviarMensagemAction implements MouseListener {
 
     private void setMensagem() {
 	Mensagem mensagem = new Mensagem();
-	mensagem.setDestinatario(chatFrame.getListausuarios().getDestinatario());
+	mensagem.setDestinatario(chatFrame.getListaUsuarios().getDestinatario());
 	mensagem.setMensagem(chatFrame.getMensagem());
 	mensagem.setUsuario(Who.IAM);
 	if (chatFrame.isReservada()) {

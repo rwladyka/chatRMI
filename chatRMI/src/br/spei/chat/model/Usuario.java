@@ -27,14 +27,6 @@ public class Usuario implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-	if (this.nickname == obj) {
-	    return true;
-	}
-	return false;
-    }
-
-    @Override
     public String toString() {
 	return nickname;
     }

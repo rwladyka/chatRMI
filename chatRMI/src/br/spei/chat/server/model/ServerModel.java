@@ -42,15 +42,21 @@ public class ServerModel implements Serializable {
     }
 
     public void adicionarUsuario(Usuario usuario) throws NicknameException {
-	if (usuarios.contains(usuario)) {
-	    throw new NicknameException();
+	for (Usuario user : usuarios) {
+	    if (usuario.getNickname().equals(user.getNickname())) {
+		throw new NicknameException();
+	    }
 	}
 	usuarios.add(usuario);
 	lastConection = usuario;
     }
 
     public void removerUsuario(Usuario usuario) {
-	this.usuarios.remove(usuarios);
+	for (Usuario user : usuarios) {
+	    if (usuario.getNickname().equals(user.getNickname())) {
+		this.usuarios.remove(user);
+	    }
+	}
     }
 
     public Set<Usuario> getUsuarios() {
@@ -63,11 +69,15 @@ public class ServerModel implements Serializable {
 
     public Socket getSocketUsuario(String nickname) {
 	for (Usuario usuario : usuarios) {
-	    if (usuario.equals(nickname)) {
+	    if (nickname.equals(usuario.toString())) {
 		return socketUsuarios.get(usuario);
 	    }
 	}
 	return null;
+    }
+
+    public Socket getSocket(Usuario usuario) {
+	return getSocketUsuario(usuario.getNickname());
     }
 
     public Usuario getUsuario(String nickname) {
