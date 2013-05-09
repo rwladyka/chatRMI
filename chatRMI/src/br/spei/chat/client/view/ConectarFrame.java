@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import br.spei.chat.client.action.ConectarAction;
+import br.spei.chat.client.action.ConectarEnterAction;
 
 public class ConectarFrame extends JInternalFrame {
     private static final long serialVersionUID = -8093133734052974695L;
@@ -42,6 +43,7 @@ public class ConectarFrame extends JInternalFrame {
 	setClosable(false);
 	setVisible(true);
 	MainFrame.getInstance().addJanelaInterna(this);
+	nick.addKeyListener(new ConectarEnterAction(nick.getText()));
     }
 
     public void addActionConectar() {
@@ -55,5 +57,4 @@ public class ConectarFrame extends JInternalFrame {
     public String getNick() {
 	return nick.getText();
     }
-
 }

@@ -9,8 +9,8 @@ import br.spei.chat.model.Usuario;
 
 public interface ChatService extends Remote {
     @SuppressWarnings("serial")
-    public class NicknameException extends Exception {
-	public NicknameException() {
+    public class NickNameException extends Exception {
+	public NickNameException() {
 	    super("Já existe um usuário com este nickname.");
 	}
     }
@@ -20,7 +20,7 @@ public interface ChatService extends Remote {
     public void enviarMensagem(Mensagem mensagem) throws RemoteException;
 
     public Usuario conectar(String nickname) throws RemoteException,
-	    NicknameException;
+	    NickNameException;
 
     public void desconectar(Usuario usuario) throws RemoteException;
 

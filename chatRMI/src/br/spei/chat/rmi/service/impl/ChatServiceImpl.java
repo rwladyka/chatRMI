@@ -36,6 +36,9 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
 
     @Override
     public void enviarMensagem(Mensagem mensagem) throws RemoteException {
+	if (mensagem.getMensagem() == null || mensagem.getMensagem().isEmpty()) {
+	    return;
+	}
 	if (mensagem.isReservada()) {
 	    enviarMensagemReservada(mensagem);
 	} else {
@@ -44,7 +47,7 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
     }
 
     @Override
-    public Usuario conectar(String nickname) throws NicknameException,
+    public Usuario conectar(String nickname) throws NickNameException,
 	    RemoteException {
 	Usuario usuario = new Usuario(nickname);
 	server.adicionarUsuario(usuario);

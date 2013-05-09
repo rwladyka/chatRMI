@@ -9,7 +9,7 @@ import java.util.Scanner;
 import br.spei.chat.client.util.ServiceUtil;
 import br.spei.chat.client.view.MainFrame;
 import br.spei.chat.rmi.service.ChatService;
-import br.spei.chat.rmi.service.ChatService.NicknameException;
+import br.spei.chat.rmi.service.ChatService.NickNameException;
 
 public class Recebedor implements Runnable {
     private InputStream is;
@@ -35,7 +35,7 @@ public class Recebedor implements Runnable {
 		    e.printStackTrace();
 		} catch (MalformedURLException e) {
 		    e.printStackTrace();
-		} catch (NicknameException e) {
+		} catch (NickNameException e) {
 		    e.printStackTrace();
 		} catch (NotBoundException e) {
 		    e.printStackTrace();

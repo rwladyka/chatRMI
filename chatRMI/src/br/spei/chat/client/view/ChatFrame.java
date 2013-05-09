@@ -7,7 +7,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
 
 import br.spei.chat.client.action.EnviarMensagemAction;
 import br.spei.chat.client.model.Conversa;
@@ -36,7 +35,6 @@ public class ChatFrame extends JInternalFrame {
     }
 
     private void initComponents(String nickname) {
-	setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	setTitle(nickname);
 	setResizable(false);
 	getContentPane().setLayout(null);

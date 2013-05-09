@@ -6,6 +6,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class ListarUsuario {
 
@@ -13,6 +15,7 @@ public class ListarUsuario {
     private JLabel labelUsarios;
     private JList<String> listaUsuarios;
     private DefaultListModel<String> listClient;
+    private String destinatario;
 
     private JScrollPane panelUsuarios;
 
@@ -21,6 +24,7 @@ public class ListarUsuario {
 	setListClient();
 	setListaUsuarios();
 	setPanelUsuarios();
+	destinatario = "Todos";
     }
 
     public static ListarUsuario getInstance() {
@@ -31,22 +35,39 @@ public class ListarUsuario {
     }
 
     private void setLabelLista() {
-	this.labelUsarios = new JLabel("Usuários");
-	this.labelUsarios.setBounds(590, 5, 200, 17);
+	labelUsarios = new JLabel("Usuários");
+	labelUsarios.setBounds(590, 5, 200, 17);
     }
 
     private void setListClient() {
-	this.listClient = new DefaultListModel<String>();
+	listClient = new DefaultListModel<String>();
+    }
+
+    public void setListaUsuarios(List<String> usuarios) {
+	listClient.clear();
+	for (String usuario : usuarios) {
+	    listClient.addElement(usuario);
+	}
+	listaUsuarios = new JList<String>(listClient);
+	panelUsuarios.setViewportView(listaUsuarios);
     }
 
     private void setListaUsuarios() {
-	this.listaUsuarios = new JList<String>(this.listClient);
+	listaUsuarios = new JList<String>(listClient);
+	listaUsuarios.setBounds(590, 30, 190, 380);
+	listaUsuarios.addListSelectionListener(new ListSelectionListener() {
+	    @Override
+	    public void valueChanged(ListSelectionEvent arg0) {
+		destinatario = listaUsuarios.getSelectedValue();
+		System.out.println(listaUsuarios.getSelectedIndex());
+		System.out.println(destinatario);
+	    }
+	});
     }
 
     private void setPanelUsuarios() {
-	this.panelUsuarios = new JScrollPane();
-	this.panelUsuarios.setViewportView(this.listaUsuarios);
-	this.panelUsuarios.setBounds(590, 30, 190, 380);
+	panelUsuarios = new JScrollPane();
+	panelUsuarios.setBounds(590, 30, 190, 380);
     }
 
     public JLabel getLabelUsuarios() {
@@ -57,25 +78,11 @@ public class ListarUsuario {
 	return panelUsuarios;
     }
 
-    public void setListaUsuarios(List<String> usuarios) {
-	this.listClient.clear();
-	for (String usuario : usuarios) {
-	    this.listClient.addElement(usuario);
-	}
-	this.listaUsuarios = new JList<String>(listClient);
-    }
-
     public JList<String> getListaUsuarios() {
 	return listaUsuarios;
     }
 
     public String getDestinatario() {
-	// destinatario = listaUsuarios.getModel().getElementAt(
-	// listaUsuarios.getSelectedIndex());
-	// if (destinatario == null || destinatario.isEmpty()) {
-	return "teste";
-	// } else {
-	// return destinatario;
-	// }
+	return destinatario;
     }
 }

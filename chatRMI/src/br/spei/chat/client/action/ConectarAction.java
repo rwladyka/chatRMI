@@ -13,7 +13,7 @@ import br.spei.chat.client.view.ConectarFrame;
 import br.spei.chat.client.view.MainFrame;
 import br.spei.chat.model.Usuario;
 import br.spei.chat.rmi.service.ChatService;
-import br.spei.chat.rmi.service.ChatService.NicknameException;
+import br.spei.chat.rmi.service.ChatService.NickNameException;
 
 public class ConectarAction implements ActionListener {
 
@@ -22,10 +22,13 @@ public class ConectarAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+	String nickname = ConectarFrame.getInstance().getNick();
+	if (nickname == null || nickname.isEmpty()) {
+	    return;
+	}
 	try {
 	    ChatService chat = ServiceUtil.chatService();
-	    Usuario usuario = chat.conectar(ConectarFrame.getInstance()
-		    .getNick());
+	    Usuario usuario = chat.conectar(nickname);
 	    ConectarFrame.getInstance().setVisible(false);
 	    Who.setIam(usuario);
 	    ChatFrame chatFrame = new ChatFrame(usuario.getNickname(),
@@ -33,7 +36,7 @@ public class ConectarAction implements ActionListener {
 	    MainFrame.getInstance().setChatFrame(chatFrame);
 	    MainFrame.getInstance().addJanelaInterna(chatFrame);
 	    new Socks();
-	} catch (NicknameException ne) {
+	} catch (NickNameException ne) {
 	    JOptionPane.showMessageDialog(null,
 		    "Já existe um usuário com este nickname!");
 	} catch (Exception ex) {

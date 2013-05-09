@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import br.spei.chat.model.Usuario;
-import br.spei.chat.rmi.service.ChatService.NicknameException;
+import br.spei.chat.rmi.service.ChatService.NickNameException;
 
 public class ServerModel implements Serializable {
     private static final long serialVersionUID = 3368529267336022665L;
@@ -41,10 +41,10 @@ public class ServerModel implements Serializable {
 	socketUsuarios.put(this.lastConection, socket);
     }
 
-    public void adicionarUsuario(Usuario usuario) throws NicknameException {
+    public void adicionarUsuario(Usuario usuario) throws NickNameException {
 	for (Usuario user : usuarios) {
 	    if (usuario.getNickname().equals(user.getNickname())) {
-		throw new NicknameException();
+		throw new NickNameException();
 	    }
 	}
 	usuarios.add(usuario);

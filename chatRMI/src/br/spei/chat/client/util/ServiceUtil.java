@@ -6,11 +6,11 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import br.spei.chat.rmi.service.ChatService;
-import br.spei.chat.rmi.service.ChatService.NicknameException;
+import br.spei.chat.rmi.service.ChatService.NickNameException;
 
 public class ServiceUtil {
 
-    public static ChatService chatService() throws NicknameException,
+    public static ChatService chatService() throws NickNameException,
 	    RemoteException, MalformedURLException, NotBoundException {
 	return (ChatService) Naming.lookup(ConfigUtil.uriRMI("ChatService"));
     }

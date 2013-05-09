@@ -40,8 +40,14 @@ public class EnviarMensagemAction implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+	setMensagem();
+	if (mensagem == null) {
+	    return;
+	}
+	if (mensagem.getMensagem() == null || mensagem.getMensagem().isEmpty()) {
+	    return;
+	}
 	try {
-	    setMensagem();
 	    ChatService chat = ServiceUtil.chatService();
 	    chat.enviarMensagem(getMensagem());
 	    chatFrame.limparMensagemEnviada();

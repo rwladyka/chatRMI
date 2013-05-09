@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import br.spei.chat.client.model.Who;
 import br.spei.chat.client.util.ServiceUtil;
 import br.spei.chat.rmi.service.ChatService;
-import br.spei.chat.rmi.service.ChatService.NicknameException;
+import br.spei.chat.rmi.service.ChatService.NickNameException;
 
 public class SairAction implements ActionListener {
 
@@ -27,7 +27,7 @@ public class SairAction implements ActionListener {
 		e1.printStackTrace();
 	    } catch (MalformedURLException e1) {
 		e1.printStackTrace();
-	    } catch (NicknameException e1) {
+	    } catch (NickNameException e1) {
 		e1.printStackTrace();
 	    } catch (NotBoundException e1) {
 		e1.printStackTrace();

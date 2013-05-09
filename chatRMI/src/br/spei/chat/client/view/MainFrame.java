@@ -18,7 +18,7 @@ import br.spei.chat.client.model.Configuracao;
 import br.spei.chat.client.model.Who;
 import br.spei.chat.client.util.ServiceUtil;
 import br.spei.chat.rmi.service.ChatService;
-import br.spei.chat.rmi.service.ChatService.NicknameException;
+import br.spei.chat.rmi.service.ChatService.NickNameException;
 
 public class MainFrame extends JFrame {
     private static final long serialVersionUID = -6068509917409475161L;
@@ -66,7 +66,7 @@ public class MainFrame extends JFrame {
 			e.printStackTrace();
 		    } catch (MalformedURLException e) {
 			e.printStackTrace();
-		    } catch (NicknameException e) {
+		    } catch (NickNameException e) {
 			e.printStackTrace();
 		    } catch (NotBoundException e) {
 			e.printStackTrace();
