@@ -2,10 +2,12 @@ package br.spei.chat.client.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import br.spei.chat.client.model.Socks;
+import br.spei.chat.client.callback.ClienteInterface;
+import br.spei.chat.client.callback.ClienteInterfaceImpl;
 import br.spei.chat.client.model.Who;
 import br.spei.chat.client.util.ServiceUtil;
 import br.spei.chat.client.view.ChatFrame;
@@ -28,14 +30,15 @@ public class ConectarAction implements ActionListener {
 	}
 	try {
 	    ChatService chat = ServiceUtil.chatService();
-	    Usuario usuario = chat.conectar(nickname);
+	    ClienteInterface callbackObj = new ClienteInterfaceImpl();
+	    Usuario usuario = chat.conectar(nickname, callbackObj);
 	    ConectarFrame.getInstance().setVisible(false);
 	    Who.setIam(usuario);
-	    ChatFrame chatFrame = new ChatFrame(usuario.getNickname(),
-		    chat.listarUsuarios());
+	    String user = usuario.getNickname();
+	    List<String> users = chat.listarUsuarios();
+	    ChatFrame chatFrame = new ChatFrame(user, users);
 	    MainFrame.getInstance().setChatFrame(chatFrame);
 	    MainFrame.getInstance().addJanelaInterna(chatFrame);
-	    new Socks();
 	} catch (NickNameException ne) {
 	    JOptionPane.showMessageDialog(null,
 		    "Já existe um usuário com este nickname!");

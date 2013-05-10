@@ -1,13 +1,12 @@
 package br.spei.chat.rmi.service.impl;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.spei.chat.client.callback.ClienteInterface;
 import br.spei.chat.model.Mensagem;
 import br.spei.chat.model.TipoMensagem;
 import br.spei.chat.model.Usuario;
@@ -47,16 +46,16 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
     }
 
     @Override
-    public Usuario conectar(String nickname) throws NickNameException,
-	    RemoteException {
+    public Usuario conectar(String nickname, ClienteInterface callback)
+	    throws NickNameException, RemoteException {
 	Usuario usuario = new Usuario(nickname);
-	server.adicionarUsuario(usuario);
+	server.adicionarUsuario(usuario, callback);
 	Mensagem mensagem = new Mensagem();
 	mensagem.setTipoMensagem(TipoMensagem.CONECTADO);
 	mensagem.setUsuario(usuario);
 	mensagem.setMensagem(MensagemUtil.formatarMensagemConexao(mensagem));
 	enviarMensagem(mensagem);
-	enviarSolicitarListaUsuario();
+	atualizarListasUsuarios();
 	return usuario;
     }
 
@@ -66,21 +65,19 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
 	Mensagem mensagem = new Mensagem();
 	mensagem.setTipoMensagem(TipoMensagem.SAIDA);
 	mensagem.setUsuario(usuario);
-	mensagem.setMensagem(MensagemUtil.formatarMensagem(mensagem));
+	mensagem.setMensagem(MensagemUtil.formatarMensagemConexao(mensagem));
 	enviarMensagem(mensagem);
-	enviarSolicitarListaUsuario();
+	atualizarListasUsuarios();
     }
 
     private void enviarMensagemPublica(Mensagem mensagem)
 	    throws RemoteException {
 	for (Usuario usuario : server.getUsuarios()) {
 	    try {
-		Socket socket = server.getSocketUsuarios().get(usuario);
-		if (socket != null) {
-		    PrintWriter output = new PrintWriter(
-			    socket.getOutputStream(), true);
-		    output.println(MensagemUtil.formatarMensagem(mensagem));
-		    output.flush();
+		ClienteInterface callback = server.getCallback().get(usuario);
+		if (callback != null) {
+		    callback.receberMensagem(MensagemUtil
+			    .formatarMensagem(mensagem));
 		}
 	    } catch (IOException e) {
 		desconectar(usuario);
@@ -91,40 +88,32 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
     private void enviarMensagemReservada(Mensagem mensagem)
 	    throws RemoteException {
 	try {
-	    Socket envio = server.getSocket(mensagem.getUsuario());
-	    Socket destinatario = server.getSocketUsuario(mensagem
+	    ClienteInterface envio = server.getCallback().get(
+		    mensagem.getUsuario());
+	    ClienteInterface destinatario = server.getCallbackUsuario(mensagem
 		    .getDestinatario());
 	    if (destinatario == null) {
 		enviarMensagemPublica(mensagem);
 	    }
-	    PrintWriter outputEnvio = new PrintWriter(envio.getOutputStream(),
-		    true);
-	    outputEnvio.println(MensagemUtil.formatarMensagem(mensagem));
-	    outputEnvio.flush();
-	    PrintWriter output = new PrintWriter(
-		    destinatario.getOutputStream(), true);
-	    output.println(MensagemUtil.formatarMensagem(mensagem));
-	    output.flush();
+	    String msg = MensagemUtil.formatarMensagem(mensagem);
+	    envio.receberMensagem(msg);
+	    destinatario.receberMensagem(msg);
 	} catch (IOException e) {
 	    desconectar(server.getUsuario(mensagem.getDestinatario()));
 	    e.printStackTrace();
 	}
     }
 
-    private void enviarSolicitarListaUsuario() throws RemoteException {
+    private void atualizarListasUsuarios() throws RemoteException {
 	for (Usuario usuario : server.getUsuarios()) {
 	    try {
-		Socket socket = server.getSocketUsuarios().get(usuario);
-		if (socket != null) {
-		    PrintWriter output = new PrintWriter(
-			    socket.getOutputStream(), true);
-		    output.println(SOLICITAR_LISTA_USUARIOS);
-		    output.flush();
+		ClienteInterface callback = server.getCallback().get(usuario);
+		if (callback != null) {
+		    callback.atualizarListaUsuarios(listarUsuarios());
 		}
 	    } catch (IOException e) {
 		desconectar(usuario);
 	    }
 	}
     }
-
 }

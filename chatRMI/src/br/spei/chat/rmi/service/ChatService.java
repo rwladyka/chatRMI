@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import br.spei.chat.client.callback.ClienteInterface;
 import br.spei.chat.model.Mensagem;
 import br.spei.chat.model.Usuario;
 
@@ -19,8 +20,8 @@ public interface ChatService extends Remote {
 
     public void enviarMensagem(Mensagem mensagem) throws RemoteException;
 
-    public Usuario conectar(String nickname) throws RemoteException,
-	    NickNameException;
+    public Usuario conectar(String nickname, ClienteInterface callback)
+	    throws RemoteException, NickNameException;
 
     public void desconectar(Usuario usuario) throws RemoteException;
 
