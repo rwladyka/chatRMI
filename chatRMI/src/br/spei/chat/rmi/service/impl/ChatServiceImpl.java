@@ -88,8 +88,8 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
     private void enviarMensagemReservada(Mensagem mensagem)
 	    throws RemoteException {
 	try {
-	    ClienteInterface envio = server.getCallback().get(
-		    mensagem.getUsuario());
+	    ClienteInterface envio = server.getCallbackUsuario(
+		    mensagem.getUsuario().getNickname());
 	    ClienteInterface destinatario = server.getCallbackUsuario(mensagem
 		    .getDestinatario());
 	    if (destinatario == null) {

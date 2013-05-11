@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import br.spei.chat.client.model.Conversa;
+import br.spei.chat.client.util.ListUtil;
 import br.spei.chat.client.view.ChatFrame;
 import br.spei.chat.client.view.MainFrame;
 
@@ -22,7 +23,7 @@ public class ClienteInterfaceImpl extends UnicastRemoteObject implements
 	ChatFrame cf = MainFrame.getInstance().getChatFrame();
 	if (cf != null) {
 	    MainFrame.getInstance().getChatFrame().getListaUsuarios()
-		    .setListaUsuarios(usuarios);
+		    .setListClient(ListUtil.toArray(usuarios));
 	}
     }
 

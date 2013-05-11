@@ -32,13 +32,13 @@ public class ConectarAction implements ActionListener {
 	    ChatService chat = ServiceUtil.chatService();
 	    ClienteInterface callbackObj = new ClienteInterfaceImpl();
 	    Usuario usuario = chat.conectar(nickname, callbackObj);
-	    ConectarFrame.getInstance().setVisible(false);
 	    Who.setIam(usuario);
 	    String user = usuario.getNickname();
 	    List<String> users = chat.listarUsuarios();
 	    ChatFrame chatFrame = new ChatFrame(user, users);
 	    MainFrame.getInstance().setChatFrame(chatFrame);
 	    MainFrame.getInstance().addJanelaInterna(chatFrame);
+	    ConectarFrame.getInstance().setVisible(false);
 	} catch (NickNameException ne) {
 	    JOptionPane.showMessageDialog(null,
 		    "Já existe um usuário com este nickname!");

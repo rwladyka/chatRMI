@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 import br.spei.chat.client.action.EnviarMensagemAction;
 import br.spei.chat.client.model.Conversa;
 import br.spei.chat.client.model.ListarUsuario;
+import br.spei.chat.client.util.ListUtil;
 
 public class ChatFrame extends JInternalFrame {
     private static final long serialVersionUID = -8434242822734503062L;
@@ -28,7 +29,8 @@ public class ChatFrame extends JInternalFrame {
     public ChatFrame(String nickname, List<String> usuarios) {
 	conversa = Conversa.getInstance();
 	listaUsuarios = ListarUsuario.getInstance();
-	listaUsuarios.setListaUsuarios(usuarios);
+	listaUsuarios.setListClient(ListUtil.toArray(usuarios));
+	listaUsuarios.addUsersToPanel();
 	initComponents(nickname);
 	setVisible(true);
 	setResizable(false);
@@ -96,4 +98,5 @@ public class ChatFrame extends JInternalFrame {
     public void limparMensagemEnviada() {
 	jTextSendMessage.setText("");
     }
+    
 }

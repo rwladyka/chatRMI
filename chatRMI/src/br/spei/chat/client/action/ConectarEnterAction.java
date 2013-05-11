@@ -18,7 +18,7 @@ import br.spei.chat.rmi.service.ChatService.NickNameException;
 
 public class ConectarEnterAction implements KeyListener {
 
-    private static String nickname;
+    private String nickname;
 
     public ConectarEnterAction(String nickname) {
 	this.nickname = nickname;
