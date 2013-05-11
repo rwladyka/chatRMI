@@ -34,6 +34,7 @@ public class ListarUsuario {
 
     public void setListClient(String[] users) {
 	listClient = users;
+	addUsersToPanel();
     }
 
     public void addUsersToPanel() {
@@ -45,13 +46,10 @@ public class ListarUsuario {
 	listaUsuarios = new JList<String>(listClient);
 	listaUsuarios.setBounds(590, 30, 190, 380);
 	listaUsuarios.setEnabled(true);
-	listaUsuarios.setValueIsAdjusting(true);
 	listaUsuarios.addListSelectionListener(new ListSelectionListener() {
 	    @Override
 	    public void valueChanged(ListSelectionEvent arg0) {
 		destinatario = listaUsuarios.getSelectedValue();
-		System.out.println(listaUsuarios.getSelectedIndex());
-		System.out.println(destinatario);
 	    }
 	});
     }

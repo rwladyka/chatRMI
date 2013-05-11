@@ -4,6 +4,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import br.spei.chat.client.action.ConversaEnterAction;
+
 public class Conversa {
 
     private static Conversa conversa;
@@ -25,22 +27,22 @@ public class Conversa {
     }
 
     private void setLabelConversa() {
-	this.labelConversa = new JLabel("Conversa");
-	this.labelConversa.setBounds(10, 5, 200, 17);
+	labelConversa = new JLabel("Conversa");
+	labelConversa.setBounds(10, 5, 200, 17);
     }
 
     private void setPanelConversa() {
-	this.panelConversa = new JScrollPane();
-	this.panelConversa.setBounds(10, 30, 570, 380);
-	this.panelConversa.setViewportView(textareaConversa);
+	panelConversa = new JScrollPane();
+	panelConversa.setBounds(10, 30, 570, 380);
+	panelConversa.setViewportView(textareaConversa);
     }
 
     private void setTextareaConversa() {
-	this.textareaConversa = new JTextArea();
-	this.textareaConversa.setColumns(20);
-	this.textareaConversa.setEditable(false);
-	this.textareaConversa.setRows(5);
-	this.textareaConversa.setAutoscrolls(false);
+	textareaConversa = new JTextArea();
+	textareaConversa.setColumns(5);
+	textareaConversa.setEditable(false);
+	textareaConversa.setRows(5);
+	textareaConversa.addKeyListener(new ConversaEnterAction());
     }
 
     public JLabel getLabelConversa() {

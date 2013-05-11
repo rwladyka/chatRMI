@@ -31,23 +31,19 @@ public class ConectarFrame extends JInternalFrame {
     }
 
     private void initComponents() {
-	this.connect = new JButton("Conectar");
-	this.setNickname(new JLabel("Nickname: "));
-	this.nick = new JTextField(25);
-	addActionConectar();
+	connect = new JButton("Conectar");
+	connect.addActionListener(new ConectarAction());
+	setNickname(new JLabel("Nickname: "));
+	nick = new JTextField(25);
 	panel.add(nickname);
 	panel.add(nick);
 	panel.add(connect);
 	add(panel);
-	setSize(500, 70);
+	setSize(600, 70);
 	setClosable(false);
 	setVisible(true);
 	MainFrame.getInstance().addJanelaInterna(this);
-	nick.addKeyListener(new ConectarEnterAction(nick.getText()));
-    }
-
-    public void addActionConectar() {
-	this.connect.addActionListener(new ConectarAction());
+	nick.addKeyListener(new ConectarEnterAction());
     }
 
     private void setNickname(JLabel nickname) {

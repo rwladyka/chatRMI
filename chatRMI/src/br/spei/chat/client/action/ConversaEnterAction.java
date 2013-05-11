@@ -15,24 +15,24 @@ import br.spei.chat.client.view.MainFrame;
 import br.spei.chat.model.Usuario;
 import br.spei.chat.rmi.service.ChatService;
 import br.spei.chat.rmi.service.ChatService.NickNameException;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
-public class ConectarEnterAction implements KeyListener {
+public class ConversaEnterAction implements KeyListener {
 
-    public ConectarEnterAction() {
+    public ConversaEnterAction() {
     }
 
     @Override
     public void keyPressed(KeyEvent arg0) {
-	String nickname =((JTextField) arg0.getSource()).getText(); 
+	String text =((JTextArea) arg0.getSource()).getText(); 
 	if (arg0.getKeyCode() == KeyEvent.VK_ENTER) {
-	    if (nickname == null || nickname.isEmpty()) {
+	    if (text == null || text.isEmpty()) {
 		return;
 	    }
 	    try {
 		ChatService chat = ServiceUtil.chatService();
 		ClienteInterface callbackObj = new ClienteInterfaceImpl();
-		Usuario usuario = chat.conectar(nickname, callbackObj);
+		Usuario usuario = chat.conectar(text, callbackObj);
 		ConectarFrame.getInstance().setVisible(false);
 		Who.setIam(usuario);
 		ChatFrame chatFrame = new ChatFrame(usuario.getNickname(),

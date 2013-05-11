@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import br.spei.chat.client.action.EnviarMensagemAction;
+import br.spei.chat.client.action.EnviarMsgEnterAction;
 import br.spei.chat.client.model.Conversa;
 import br.spei.chat.client.model.ListarUsuario;
 import br.spei.chat.client.util.ListUtil;
@@ -52,34 +53,35 @@ public class ChatFrame extends JInternalFrame {
     }
 
     private void setLabelMensagem() {
-	this.labelMensagem = new JLabel("Mensagem");
-	this.labelMensagem.setBounds(10, 420, 200, 17);
-	getContentPane().add(this.labelMensagem);
+	labelMensagem = new JLabel("Mensagem");
+	labelMensagem.setBounds(10, 420, 200, 17);
+	getContentPane().add(labelMensagem);
     }
 
     private void setButtonEnviar() {
-	this.buttonSend = new JButton("Enviar");
-	this.buttonSend.setBounds(590, 440, 190, 70);
-	this.buttonSend.addMouseListener(new EnviarMensagemAction(this));
-	getContentPane().add(this.buttonSend);
+	buttonSend = new JButton("Enviar");
+	buttonSend.setBounds(590, 440, 190, 70);
+	buttonSend.addMouseListener(new EnviarMensagemAction(this));
+	getContentPane().add(buttonSend);
     }
 
     private void setTextareaMensagem() {
-	this.jTextSendMessage = new JTextField();
-	this.jTextSendMessage.setBounds(10, 440, 570, 70);
+	jTextSendMessage = new JTextField();
+	jTextSendMessage.setBounds(10, 440, 570, 70);
+	jTextSendMessage.addKeyListener(new EnviarMsgEnterAction());
 	getContentPane().add(this.jTextSendMessage);
     }
 
     private void setCheckReservada() {
-	this.reservada = new JCheckBox("Reservada");
-	this.reservada.setBounds(100, 420, 200, 17);
-	getContentPane().add(this.reservada);
+	reservada = new JCheckBox("Reservada");
+	reservada.setBounds(100, 420, 200, 17);
+	getContentPane().add(reservada);
     }
 
     public String getMensagem() {
 	String mensagem = "";
-	if (this.jTextSendMessage != null) {
-	    mensagem = this.jTextSendMessage.getText();
+	if (jTextSendMessage != null) {
+	    mensagem = jTextSendMessage.getText();
 	}
 	return mensagem;
     }
@@ -98,5 +100,4 @@ public class ChatFrame extends JInternalFrame {
     public void limparMensagemEnviada() {
 	jTextSendMessage.setText("");
     }
-    
 }

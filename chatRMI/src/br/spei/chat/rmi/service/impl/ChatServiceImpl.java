@@ -105,11 +105,12 @@ public class ChatServiceImpl extends UnicastRemoteObject implements ChatService 
     }
 
     private void atualizarListasUsuarios() throws RemoteException {
+	List<String> users = listarUsuarios();
 	for (Usuario usuario : server.getUsuarios()) {
 	    try {
-		ClienteInterface callback = server.getCallback().get(usuario);
+		ClienteInterface callback = server.getCallbackUsuario(usuario.getNickname());
 		if (callback != null) {
-		    callback.atualizarListaUsuarios(listarUsuarios());
+		    callback.atualizarListaUsuarios(users);
 		}
 	    } catch (IOException e) {
 		desconectar(usuario);
